@@ -1,6 +1,6 @@
 resource "aws_security_group" "ssh_cluster" {
-  name        = "ssh_cluster"
-  vpc_id      = module.vpc.vpc_id
+  name   = "ssh_cluster"
+  vpc_id = module.vpc.vpc_id
 }
 
 resource "aws_security_group_rule" "ssh_cluster_in" {
