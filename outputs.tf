@@ -20,3 +20,8 @@ output "cluster_name" {
   description = "Kubernetes Cluster Name"
   value       = module.eks.cluster_name
 }
+
+output "arn_fastfood" {
+  description = "AWS arn_fastfood"
+  value       = var.arn_fastfood
+}

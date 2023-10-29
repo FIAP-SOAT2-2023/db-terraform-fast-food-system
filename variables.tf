@@ -17,4 +17,7 @@ variable "cluster_name" {
   type = string
 }
 
+variable "arn_fastfood"{
+  type = string
+}
 
