@@ -1,0 +1,23 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  description: api description here
+  version: v1
+paths:
+  /example:
+    get: 
+      security: # This is where you apply the authorizer to the API endpoint
+        - jwt-authorizer: [] # This is the name of the authorizer defined below
+      x-amazon-apigateway-integration:
+          type: AWS_PROXY
+components:
+  securitySchemes: 
+    jwt-authorizer: # This is the custom name of the authorizer that you can reference in the security section above
+      type: oauth2 
+      x-amazon-apigateway-authorizer: 
+        type: jwt 
+        identitySource: "$request.header.Authorization" # This indicates that the JWT token is passed in the Authorization header of the request
+        jwtConfiguration:
+          audience:
+            - ${client_id} # This is where you specify the client ID of your Cognito user pool app client
+          issuer: https://cognito-idp.${region}.amazonaws.com/${user_pool_id} # This is where you specify the issuer of your Cognito user pool JWT token

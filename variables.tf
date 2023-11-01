@@ -21,3 +21,7 @@ variable "arn_fastfood"{
   type = string
 }
 
+
+variable "lambda_name"{
+  type = string
+}
