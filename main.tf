@@ -5,7 +5,7 @@ provider "aws" {
   region     = var.region
   access_key = var.access_key
   secret_key = var.secret_key
-   
+
 }
 
 # Filter out local zones, which are not currently supported 
@@ -17,15 +17,14 @@ data "aws_availability_zones" "available" {
   }
 }
 
-locals {
-  cluster_name = "fastfood-eks-${random_string.suffix.result}"
-}
+
 
 resource "random_string" "suffix" {
   length  = 8
   special = false
 }
 
+/*
 data "aws_iam_policy" "ebs_csi_policy" {
   arn = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
 }
@@ -40,34 +39,4 @@ resource "aws_eks_addon" "ebs-csi" {
     "terraform" = "true"
   }
 }
-/* aws ec2 create-default-vpc */
-resource "aws_security_group" "rds_sg" {
-  name = "rds_sg"
-  ingress {
-    from_port       = 3306
-    to_port         = 3306
-    protocol        = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
-#create a RDS Database Instance
-resource "aws_db_instance" "fastfooddb" {
-  engine               = "mysql"
-  identifier           = "fastfooddb"
-  allocated_storage    =  20
-  engine_version       = "5.7"
-  instance_class       = "db.t2.micro"
-  username             = "adminfastfood"
-  password             = "SOAT47fastfood"
-  parameter_group_name = "default.mysql5.7"
-  vpc_security_group_ids = ["${aws_security_group.rds_sg.id}"]
-  skip_final_snapshot  = true
-  publicly_accessible =  true
-}
+*/

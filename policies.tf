@@ -17,7 +17,7 @@ resource "aws_iam_role" "example" {
 }
 EOF
 }
-
+/*
 data "aws_eks_cluster_auth" "example" {
   name = aws_eks_cluster.eks_cluster.name
 }
@@ -37,3 +37,4 @@ resource "kubernetes_config_map" "aws_auth" {
 EOF
   }
 }
+*/
