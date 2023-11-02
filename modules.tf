@@ -32,7 +32,7 @@ module "eks" {
 
 
   //eks_managed_node_group_defaults = {
-//    ami_type = "ami-01bc990364452ab3e"
+  //    ami_type = "ami-01bc990364452ab3e"
 
   //}
   /*
@@ -92,4 +92,8 @@ module "vpc" {
     "kubernetes.io/cluster/${local.cluster_name}" = "shared"
     "kubernetes.io/role/internal-elb"             = 1
   }
+
+  create_database_subnet_group = true
+
+  database_subnets = ["10.0.7.0/24", "10.0.8.0/24"]
 }

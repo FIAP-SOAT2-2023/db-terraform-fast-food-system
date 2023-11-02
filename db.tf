@@ -1,3 +1,4 @@
+/*
 module "vpc_rds" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "5.0.0"
@@ -11,14 +12,20 @@ module "vpc_rds" {
   enable_nat_gateway   = true
   single_nat_gateway   = true
   enable_dns_hostnames = true
+
+  create_database_subnet_group = true
+
+  database_subnets = [ "10.0.7.0/24", "10.0.8.0/24"]
+
 }
+*/
 
 
 
 /* aws ec2 create-default-vpc */
 resource "aws_security_group" "fastfooddb_security_group" {
   name   = "fastfooddb_security_group"
-  vpc_id = module.vpc_rds.vpc_id
+  vpc_id = module.vpc.vpc_id
 
   ingress {
     from_port   = 3306
@@ -36,7 +43,7 @@ resource "aws_security_group" "fastfooddb_security_group" {
 
 resource "aws_db_subnet_group" "fastfooddb_subnet" {
   name       = "fastfooddb_subnet"
-  subnet_ids = module.vpc_rds.public_subnets
+  subnet_ids = module.vpc.public_subnets
   tags = {
     Name = "Education"
   }
@@ -46,16 +53,17 @@ resource "aws_db_subnet_group" "fastfooddb_subnet" {
 #create a RDS Database Instance
 resource "aws_db_instance" "fastfooddb" {
   engine                 = "mysql"
+  engine_version         = "8.0.28"
   identifier             = "fastfooddb"
+
   allocated_storage      = 20
-  engine_version         = "5.7"
-  instance_class         = "db.t2.micro"
+  instance_class         = "db.r5.xlarge"
   username               = "adminfastfood"
   password               = "SOAT47fastfood"
-  parameter_group_name   = "default.mysql5.7"
+  //parameter_group_name   = "default.mysql5.7"
   vpc_security_group_ids = [aws_security_group.fastfooddb_security_group.id]
   skip_final_snapshot    = true
   publicly_accessible    = true
-  db_subnet_group_name =  aws_db_subnet_group.fastfooddb_subnet.name
+  db_subnet_group_name   = module.vpc.database_subnet_group_name
 
 }
