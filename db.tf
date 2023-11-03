@@ -57,7 +57,7 @@ resource "aws_db_instance" "fastfooddb" {
   identifier             = "fastfooddb"
 
   allocated_storage      = 20
-  instance_class         = "db.r5.xlarge"
+  instance_class         = "db.t3.micro"
   username               = "adminfastfood"
   password               = "SOAT47fastfood"
   //parameter_group_name   = "default.mysql5.7"
