@@ -3,11 +3,11 @@ name: 'Pipeline'
 on:
   push:
     branches:
-      - main
+      - feature-pipeline
 
   pull_request:
     branches:
-      - main
+      - feature-pipeline
 
 jobs:
   terraform:
