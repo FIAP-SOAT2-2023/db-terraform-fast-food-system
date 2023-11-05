@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - feature-pipeline
-    paths:
-      - ./**
 
 jobs:
   terraform:
