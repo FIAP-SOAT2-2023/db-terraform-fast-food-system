@@ -13,3 +13,7 @@ output "security_group_id" {
 output "db_instance_endpoint" {
   value = aws_db_instance.fastfooddb.endpoint
 }
+
+output "aws_ecr_repository" {
+  value = aws_ecr_repository.fastfoodsystem.repository_url
+}

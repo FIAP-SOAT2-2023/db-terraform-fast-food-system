@@ -28,10 +28,10 @@ resource "aws_db_subnet_group" "fastfooddb_subnet" {
 
 #create a RDS Database Instance
 resource "aws_db_instance" "fastfooddb" {
-  engine         = "mysql"
-  engine_version = "8.0.28"
-  identifier     = "fastfooddb"
-
+  engine            = "mysql"
+  engine_version    = "8.0.28"
+  identifier        = "fastfooddb"
+  db_name           = "fastfooddb"
   allocated_storage = 20
   instance_class    = "db.t3.micro"
   username          = "adminfastfood"

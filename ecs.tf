@@ -36,7 +36,8 @@ module "ecs_service" {
   memory = 4096
   runtime_platform = {
     operating_system_family = "LINUX"
-    cpu_architecture        = "ARM64"
+    //cpu_architecture        = "ARM64"
+    // x86-64
   }
 
   # Enables ECS Exec
@@ -45,29 +46,29 @@ module "ecs_service" {
   # Container definition(s)
   container_definitions = {
 
-    fluent-bit = {
-      cpu       = 512
-      memory    = 1024
-      essential = true
-      image     = nonsensitive(data.aws_ssm_parameter.fluentbit.value)
-      /*
-      firelens_configuration = {
-        type = "fluentbit"
-      }
-      */
-      memory_reservation = 50
-      user               = "0"
-    }
-
     (local.container_name) = {
-      cpu       = 512
-      memory    = 1024
+      cpu       = 1024
+      memory    = 4096
       essential = true
-      image     = "docker.io/claudioramosti/fastfoodsystem:latest"
-      "environment":[{
+      image     = "914643601265.dkr.ecr.us-east-1.amazonaws.com/fastfoodsystem:latest"
+      "environment" : [{
         "name" : "DB_HOST",
-        "value" : aws_db_instance.fastfooddb.endpoint
-      }]
+        "value" : replace(aws_db_instance.fastfooddb.endpoint, ":3306", "")
+        },
+        {
+          "name" : "DB_USER",
+          "value" : aws_db_instance.fastfooddb.username
+        },
+        {
+          "name" : "DB_PASS",
+          "value" : aws_db_instance.fastfooddb.password
+        },
+        {
+          "name" : "DB_NAME",
+          "value" : aws_db_instance.fastfooddb.db_name
+        }
+
+      ]
 
       port_mappings = [
         {
@@ -82,13 +83,8 @@ module "ecs_service" {
       # Example image used requires access to write to root filesystem
       readonly_root_filesystem = false
 
-      dependencies = [{
-        containerName = "fluent-bit"
-        condition     = "START"
-      }]
-
       enable_cloudwatch_logging = true
-      memory_reservation = 100
+      memory_reservation        = 100
     }
   }
 
