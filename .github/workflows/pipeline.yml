@@ -3,7 +3,7 @@ name: Apply terraform resources on folder
 on:
   push:
     branches:
-      - pipeline
+      - develop
     paths:
       - '.'
 
