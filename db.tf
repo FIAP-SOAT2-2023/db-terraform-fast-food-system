@@ -21,7 +21,7 @@ resource "aws_db_subnet_group" "fastfooddb_subnet" {
   name       = "fastfooddb_subnet"
   subnet_ids = module.vpc.public_subnets
   tags = {
-    Name = "Education"
+    Name = "fastfooddb"
   }
 }
 /**/
@@ -41,5 +41,7 @@ resource "aws_db_instance" "fastfooddb" {
   skip_final_snapshot    = true
   publicly_accessible    = true
   db_subnet_group_name   = module.vpc.database_subnet_group_name
+
+
 
 }
