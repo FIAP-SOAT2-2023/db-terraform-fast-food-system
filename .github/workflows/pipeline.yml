@@ -1,4 +1,4 @@
-name: Apply terraform resources on folder
+name: pipeline
 
 on:
   push:
