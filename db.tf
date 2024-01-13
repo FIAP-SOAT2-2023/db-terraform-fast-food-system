@@ -27,11 +27,11 @@ resource "aws_db_subnet_group" "fastfooddb_subnet" {
 /**/
 
 #create a RDS Database Instance
-resource "aws_db_instance" "fastfooddb" {
+resource "aws_db_instance" "fastfooddb_order" {
   engine            = "mysql"
   engine_version    = "8.0.28"
-  identifier        = "fastfooddb"
-  db_name           = "fastfooddb"
+  identifier        = "fastfoodorder"
+  db_name           = "fastfooddb_order"
   allocated_storage = 20
   instance_class    = "db.t3.micro"
   username          = "adminfastfood"
@@ -41,7 +41,38 @@ resource "aws_db_instance" "fastfooddb" {
   skip_final_snapshot    = true
   publicly_accessible    = true
   db_subnet_group_name   = module.vpc.database_subnet_group_name
+}
 
+#create a RDS Database Instance
+resource "aws_db_instance" "fastfooddb_customer" {
+  engine            = "mysql"
+  engine_version    = "8.0.28"
+  identifier        = "fastfooddbcustomer"
+  db_name           = "fastfooddb_customer"
+  allocated_storage = 20
+  instance_class    = "db.t3.micro"
+  username          = "adminfastfood"
+  password          = "SOAT47fastfood"
+  //parameter_group_name   = "default.mysql5.7"
+  vpc_security_group_ids = [aws_security_group.fastfooddb_security_group.id]
+  skip_final_snapshot    = true
+  publicly_accessible    = true
+  db_subnet_group_name   = module.vpc.database_subnet_group_name
+}
 
-
+#create a RDS Database Instance
+resource "aws_db_instance" "fastfooddb_payment" {
+  engine            = "mysql"
+  engine_version    = "8.0.28"
+  identifier        = "fastfooddbpayment"
+  db_name           = "fastfooddb_payment"
+  allocated_storage = 20
+  instance_class    = "db.t3.micro"
+  username          = "adminfastfood"
+  password          = "SOAT47fastfood"
+  //parameter_group_name   = "default.mysql5.7"
+  vpc_security_group_ids = [aws_security_group.fastfooddb_security_group.id]
+  skip_final_snapshot    = true
+  publicly_accessible    = true
+  db_subnet_group_name   = module.vpc.database_subnet_group_name
 }
