@@ -6,7 +6,7 @@ provider "mongodbatlas" {
 }
 # Create the resources
 
-resource "mongodbatlas_cluster" "my_cluster" {
+resource "mongodbatlas_cluster" "preparation" {
   name                 = "my-cluster"
   //provider_region_name = "US_EAST_1"
   //nodes = 1
@@ -20,14 +20,14 @@ resource "mongodbatlas_cluster" "my_cluster" {
 
 
 # Create a Database User
-resource "mongodbatlas_database_user" "db-user" {
-  username = "user-1"
-  password = "teste"
+resource "mongodbatlas_database_user" "preparation_user" {
+  username = "preparationsrv"
+  password = "preparationsrv"
   project_id = "65a0832006a1fb3d69d07042"
   auth_database_name = "admin"
   roles {
     role_name     = "readWrite"
-    database_name = "my-cluster-db"
+    database_name = "preparation"
   }
 }
 

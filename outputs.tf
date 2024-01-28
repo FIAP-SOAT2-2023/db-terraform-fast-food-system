@@ -12,5 +12,5 @@ output "db_instance_endpoint_payment" {
 
 
 output "mongo_endpoint" {
-  value = mongodbatlas_cluster.my_cluster.connection_strings[0].standard
+  value = mongodbatlas_cluster.preparation.connection_strings[0].standard
 }
